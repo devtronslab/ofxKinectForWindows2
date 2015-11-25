@@ -23,6 +23,7 @@ namespace ofxKinectForWindows2 {
 			}
 
 			void set(const _Joint& j, const _JointOrientation& jo) {
+
 				joint = j;
 				jOrient = jo;
 				orientation.set(jo.Orientation.x, jo.Orientation.y, jo.Orientation.z, jo.Orientation.w);
@@ -65,8 +66,10 @@ namespace ofxKinectForWindows2 {
 		protected:
 			ofVec3f position;
 			ofQuaternion orientation;
+			ofQuaternion lastOrientation;
 			JointType type;
 			TrackingState trackingState;
+			bool bNewlyCreated;
 
 			_Joint joint;
 			_JointOrientation jOrient;

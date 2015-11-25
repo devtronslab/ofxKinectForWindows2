@@ -115,14 +115,31 @@ namespace ofxKinectForWindows2 {
 								throw Exception("Failed to get joints orientation");
 							}
 
+							
+							// it's unclear when body.joints is cleared, so all of this complexity is necessary
+							// first, update the joint in body.joints
+							// second, if the body is not new, calculate the vector distance traveled by the joint
+							// if the joint is new, assume 0 distance traveled
+							// third, update the joint in body.previousJoints
 							for (int j = 0; j < JointType_Count; ++j) {
 								body.joints[joints[j].JointType] = Data::Joint(joints[j], jointsOrient[j]);
+
+								if (body.previousJoints.find(joints[j].JointType) != body.previousJoints.end()) {
+									body.distanceTraveled[joints[j].JointType] = body.joints[joints[j].JointType].getPosition() - body.previousJoints[joints[j].JointType].getPosition();
+								}
+								else {
+									body.distanceTraveled[joints[j].JointType] = ofVec3f(0, 0, 0);
+								}
+
+								body.previousJoints[joints[j].JointType] = body.joints[joints[j].JointType];
 							}
 
 							// retrieve hand states
 
 							HandState leftHandState = HandState_Unknown;
 							HandState rightHandState = HandState_Unknown;
+							TrackingConfidence leftHandConfidence = TrackingConfidence_Low;
+							TrackingConfidence rightHandConfidence = TrackingConfidence_Low;
 
 							if (FAILED(pBody->get_HandLeftState(&leftHandState))){
 								throw Exception("Failed to get left hand state");
@@ -131,8 +148,17 @@ namespace ofxKinectForWindows2 {
 								throw Exception("Failed to get right hand state");
 							}
 
+							if (FAILED(pBody->get_HandLeftConfidence(&leftHandConfidence))) {
+								throw Exception("Failed to get left hand confidence");
+							}
+							if (FAILED(pBody->get_HandRightConfidence(&rightHandConfidence))) {
+								throw Exception("Failed to get right hand confidence");
+							}
+
 							body.leftHandState = leftHandState;
 							body.rightHandState = rightHandState;
+							body.leftHandConfidence = leftHandConfidence;
+							body.rightHandConfidence = rightHandConfidence;
 						}
 					}
 				}

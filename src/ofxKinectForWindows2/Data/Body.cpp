@@ -30,6 +30,23 @@ namespace ofxKinectForWindows2 {
 			return * Body::bonesAtlas;
 		}
 
+
+		//----------
+		map<JointType, ofVec3f> Body::getJointVels(float elapsedTime)
+		{
+			map<JointType, ofVec3f> result;
+			if (previousJoints.empty()) {
+				ofLogNotice("returning 0-velocity vectors because of lack of previous positions");
+				return result;
+			}
+			for (auto & joint : joints) {
+				ofVec3f & velocity = result[joint.second.getType()] = ofVec3f();
+				velocity.set(distanceTraveled[joint.first] / elapsedTime);
+			}
+			return result;
+		}
+
+
 		//----------
 		void Body::initBonesAtlas() {
 			Body::bonesAtlas = new vector<pair<JointType, JointType> >();
