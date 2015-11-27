@@ -123,9 +123,17 @@ namespace ofxKinectForWindows2 {
 							// third, update the joint in body.previousJoints
 							for (int j = 0; j < JointType_Count; ++j) {
 								body.joints[joints[j].JointType] = Data::Joint(joints[j], jointsOrient[j]);
-
+								
+ 
 								if (body.previousJoints.find(joints[j].JointType) != body.previousJoints.end()) {
 									body.distanceTraveled[joints[j].JointType] = body.joints[joints[j].JointType].getPosition() - body.previousJoints[joints[j].JointType].getPosition();
+								}
+								else if (body.joints[joints[j].JointType].getTrackingState() == TrackingState_NotTracked ||
+									body.joints[joints[j].JointType].getTrackingState() == TrackingState_Inferred ||
+									body.previousJoints[joints[j].JointType].getTrackingState() == TrackingState_NotTracked ||
+									body.previousJoints[joints[j].JointType].getTrackingState() == TrackingState_Inferred) {
+
+									body.distanceTraveled[joints[j].JointType] = ofVec3f(0, 0, 0);
 								}
 								else {
 									body.distanceTraveled[joints[j].JointType] = ofVec3f(0, 0, 0);
