@@ -300,10 +300,10 @@ namespace ofxKinectForWindows2 {
 				color = ofColor(0, 255, 0, 80);
 				break;
 			case HandState_Closed :
-				color = ofColor(255, 255, 0, 80);
+				color = ofColor(255, 0, 0, 80);
 				break;
 			case HandState_Lasso:
-				color = ofColor(0, 255, 255, 80);
+				color = ofColor(0, 0, 255, 80);
 				break;
 			}
 			ofEnableAlphaBlending();
