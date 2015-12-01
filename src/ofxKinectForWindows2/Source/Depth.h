@@ -2,6 +2,9 @@
 
 #include "BaseImage.h"
 
+#define		DEPTH_WIDTH 512
+#define		DEPTH_HEIGHT 424
+
 namespace ofxKinectForWindows2 {
 	namespace Source {
 		class Depth : public BaseImageSimple<unsigned short, IDepthFrameReader, IDepthFrame> {

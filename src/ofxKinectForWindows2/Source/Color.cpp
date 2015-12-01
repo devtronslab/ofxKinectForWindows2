@@ -37,6 +37,7 @@ namespace ofxKinectForWindows2 {
 				SafeRelease(this->reader);
 				throw (e);
 			}
+			pixels.allocate(COLOR_WIDTH, COLOR_HEIGHT, OF_PIXELS_RGB);
 		}
 
 		//----------

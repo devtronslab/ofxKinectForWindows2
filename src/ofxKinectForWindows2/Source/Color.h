@@ -7,6 +7,9 @@
 #include "ofPixels.h"
 #include "ofTexture.h"
 
+#define		COLOR_WIDTH 1920
+#define		COLOR_HEIGHT 1080
+
 namespace ofxKinectForWindows2 {
 	namespace Source {
 		class Color : public BaseImage<unsigned char, IColorFrameReader, IColorFrame> {
