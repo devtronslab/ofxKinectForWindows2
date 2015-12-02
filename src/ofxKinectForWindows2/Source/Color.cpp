@@ -1,6 +1,9 @@
 #include "Color.h"
 #include "ofMain.h"
 
+#define		COLOR_WIDTH 1920
+#define		COLOR_HEIGHT 1080
+
 #define CHECK_OPEN if(!this->reader) { OFXKINECTFORWINDOWS2_ERROR << "Failed : Reader is not open"; }
 
 namespace ofxKinectForWindows2 {
